@@ -8,6 +8,5 @@ env/
 .project
 .pydevproject
 .settings
-static/dist
 sqlite3.exe
 */migrations/*

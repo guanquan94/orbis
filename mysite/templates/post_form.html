@@ -1,0 +1,19 @@
+{% extends "site_base.html" %}
+
+{% load i18n %}
+{% load crispy_forms_tags %}
+
+{% block head_title %}pinax-project-account{% endblock %}
+
+{% block body_class %}home{% endblock %}
+
+{% block body_base %}
+
+<h1>Form</h1>
+
+<form method='POST' action='' enctype='multipart/form-data'>{% csrf_token %}
+{{ form }}
+<input class="btn btn-default" type='submit' value='Create Post' />
+</form>
+
+{% endblock %}

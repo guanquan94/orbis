@@ -1,0 +1,11 @@
+*.pyc
+node_modules/
+_build/
+dev.db
+site_media/
+env/
+.project
+.pydevproject
+.settings
+static/
+sqlite3.exe

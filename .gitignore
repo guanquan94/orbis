@@ -1,4 +1,5 @@
 *.pyc
+*.db
 node_modules/
 _build/
 dev.db
@@ -9,3 +10,4 @@ env/
 .settings
 static/
 sqlite3.exe
+*/migrations/*

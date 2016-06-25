@@ -10,7 +10,7 @@ DEBUG = True
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": "C:\Users\User\Desktop\Orbital\mysite\mydatabase.db",
+	'NAME': os.path.join(BASE_DIR, 'mydatabase.db'),
     }
 }
 

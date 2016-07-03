@@ -1,5 +1,5 @@
 import os
-
+from django.conf.global_settings import EMAIL_HOST_PASSWORD, EMAIL_USE_TLS
 
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
 PACKAGE_ROOT = os.path.abspath(os.path.dirname(__file__))
@@ -15,6 +15,17 @@ DATABASES = {
 }
 
 ALLOWED_HOSTS = []
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'yourgmail@gmail.com'
+EMAIL_HOST_PASSWORD = 'yourpassword'
+EMAIL_POST = 587
+EMAIL_USE_TLS = True
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -68,10 +79,10 @@ STATICFILES_DIRS = [
 
 # List of finder classes that know how to find static files in
 # various locations.
-STATICFILES_FINDERS = [
-    "django.contrib.staticfiles.finders.FileSystemFinder",
-    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
-]
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+)
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = "kt%i9lv@gey59v-=ku12ru08kwjm*)4t!f)i9674g-=$x3%q-g"
@@ -124,23 +135,29 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.sites",
     "django.contrib.staticfiles",
+    
+    "reviews_user",  
     "pinax.ratings",
-    "reviews_user",
-
     # theme
     "bootstrapform",
     "pinax_theme_bootstrap",
-    
-    'crispy_forms',
 
     # external
     "account",
     "pinax.eventlog",
     "pinax.webanalytics",
+    'crispy_forms',
+    'schedule',
+    #'allauth',
+    #'allauth.account',
+    #'allauth.socialaccount',
+    #'allauth.socialaccount.providers.facebook',
+    #'allauth.socialaccount.providers.twitter',
 
     # project
     "mysite",
     "Scheduler",
+    'contact_form',
     
 ]
 
@@ -190,3 +207,4 @@ ACCOUNT_USE_AUTH_AUTHENTICATE = True
 AUTHENTICATION_BACKENDS = [
     "account.auth_backends.UsernameAuthenticationBackend",
 ]
+

@@ -1,0 +1,5 @@
+[run]
+source = schedule
+
+[report]
+omit = tests/*,*/migrations/*,schedule/models/__init__.py,schedule/management/*,schedule/admin.py

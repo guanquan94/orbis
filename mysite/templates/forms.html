@@ -1,25 +1,21 @@
-{% extends "base_1.html" %}
-{% load crispy_forms_tags %}
+{% extends "site_base.html" %}
+{% load bootstrap %}
+{% block head_title %}Contact Us{% endblock %}
 
-{% block content_1 %}
+{% block extra_head %}
 
 <div class="row">
-	<div class="col-sm-6 col-sm-offset-3">
-
-	{% if title %}
-	<h1 class="text-align-center">{{ title }}</h1>
-	{% endif %}
-
-	<br></br>
-
-	<form method='POST' action=''>{% csrf_token %}
-	{{ form|crispy }}
-
-	<input class="btn btn-default" type='submit' value='Submit' />
-
-	</div>
+    <div class="col-sm-6 col-sm-offset-2">
+        {% if title %}
+        <h1 class="text-align-center">{{ title }}</h1>
+        {% endif %}
+        
+        <form method='POST' action =''>{% csrf_token %}
+        {{ form|bootstrap }}
+        </br>
+        <input class='btn btn-default' type='submit' value='Submit' />
+        </form>
+    </div>
 </div>
-
-</form>
 
 {% endblock %}

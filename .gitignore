@@ -10,3 +10,4 @@ env/
 .settings
 sqlite3.exe
 */migrations/*
+.tox/*

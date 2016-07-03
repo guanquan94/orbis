@@ -3,53 +3,60 @@
 {% load i18n %}
 {% load crispy_forms_tags %}
 
-{% block head_title %}pinax-project-account{% endblock %}
+{% block head_title %}View{% endblock %}
 
 {% block body_class %}home{% endblock %}
 
 {% block body_base %}
 
-<h1>{{ title }}</h1>
+<div class='col-sm-6 col-sm-offset-2'>
+    <h1>Reviews</h1>
 
-<a class='btn btn-primary' href="{% url 'post_create' %}">Create</a>
+    <form method="GET" action="">
+    <input type="text" name="q" placeholder="Search Posts" value="{{ request.GET.q }}"/>
+    <input type="submit" value="Search" />
+    </form>
+    <br/>
+    <p>
+    <a class='btn btn-default' href="{% url 'post_create' %}">Create</a>
+    </p>
+    <br/>
+    
+    {% for obj in object_list %}
+    <div class='row'>
+        <div class="col-sm-6">
+            <div class="thumbnail">
+                {% if obj.image %}
+                <img src="{{ obj.image.url }}" class='img-responsive' />
+                {% endif %}
+            <div class="caption">
+                {% if obj.draft %}
+                <h3>Staff Only: Draft</h3>
+                {% endif %}
 
-<form method="GET" action="">
-    {{ form|crispy }}
-<input type="text" name="q" placeholder="Search Posts" value="{{ request.GET.q }}"/>
-<input type="submit" value="Search" />
-</form>
+                {% if obj.publish > today %}
+                <h3>Staff Only: Future Post</h3>
+                {% endif %}
 
-</br>
+                <h3><a href='{{ obj.get_absolute_url }}'>{{ obj.title }}</a> <small>{{ obj.publish }}</small></h3>
+                {% if obj.user.get_full_name %}
+                <p>Author: {{ obj.user.get_full_name }}</p>
+                {% endif %}
+                <p>{{ obj.content|linebreaks|truncatechars:120 }}</p>
+                <p><a href="{{ obj.get_absolute_url }}" class="btn btn-primary" role="button">View</a></p>
+                
 
-<div class='row'>
-{% for obj in object_list %}
-  <div class="col-sm-6">
-    <div class="thumbnail">
-        {% if obj.image %}
-        <img src="{{ obj.image.url }}" class='img-responsive' />
-        {% endif %}
-      <div class="caption">
-
-        {% if obj.draft %}
-        <h3>Staff Only: Draft</h3>
-        {% endif %}
-
-        {% if obj.publish > today %}
-        <h3>Staff Only: Future Post</h3>
-        {% endif %}
-
-        <h3><a href='{{ obj.get_absolute_url }}'>{{ obj.title }}</a> <small>{{ obj.publish }}</small></h3>
-        {% if obj.user.get_full_name %}
-        <p>Author: {{ obj.user.get_full_name }}</p>
-        {% endif %}
-        <p>{{ obj.content|linebreaks|truncatechars:120 }}</p>
-        <p><a href="{{ obj.get_absolute_url }}" class="btn btn-primary" role="button">View</a></p>
-      </div>
+            </div>
+        </div>
     </div>
-  </div>
 
-{% cycle "" "<div class='col-sm-12'></div><hr/></div><div class='row'>" %}
-{% endfor %}
+
+    {% endfor %}
+
+
+
+
+</div>	
 
 <div class="pagination">
     <span class="step-links">
@@ -66,8 +73,5 @@
         {% endif %}
     </span>
 </div>
-
-
-</div>	
 
 {% endblock %}

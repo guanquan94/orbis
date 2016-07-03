@@ -96,6 +96,12 @@ class Event(with_metaclass(ModelBase, *get_model_bases())):
     def get_absolute_url(self):
         return reverse('event', args=[self.id])
 
+    def get_edit_url(self):
+        return reverse('edit_event', args=[self.calendar.id, self.id])
+    
+    def get_delete_url(self):
+        return reverse('delete_event', args=[self.id])
+
     def get_occurrences(self, start, end):
         """
         >>> rule = Rule(frequency = "MONTHLY", name = "Monthly")

@@ -10,8 +10,9 @@
     </td>
     <td class="col-md-4">
       {% for occ in slot.occurrences %}
-            <button type="button"  class="btn {% if occ.cancelled %} btn-danger {%else%} btn-primary {% endif %}" data-toggle="modal" data-target="#{% hash_occurrence occ %}">
                   {% options occ %}
+                              <button type="button"  class="btn {% if occ.cancelled %} btn-danger {%else%} btn-primary {% endif %}" data-toggle="modal" data-target="#{% hash_occurrence occ %}">
+
                   {% title occ %}
             </button>
       {% include 'schedule/_detail.html' with occurrence=occ %}

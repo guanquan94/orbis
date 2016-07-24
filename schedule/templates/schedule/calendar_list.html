@@ -1,18 +1,37 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load staticfiles i18n %}
+
 {% block head_title %}{% trans "Available Calendars" %}{% endblock %}
 {% block body %}
+
 <h2>{% trans "Available Calendars" %}</h2>
-<ul>
-{% for cal in object_list %}
-<li><b>{{ cal }}</b> :
-  <a href="{% url "compact_calendar" cal.slug %}">{% trans "Small Month" %}</a> --
-  <a href="{% url "month_calendar" cal.slug %}">{% trans "1 Month" %}</a> --
-  <a href="{% url "tri_month_calendar" cal.slug %}">{% trans "3 Months" %}</a> --
-  <a href="{% url "year_calendar" cal.slug %}">{% trans "This Year" %}</a> --
-  <a href="{% url "week_calendar" cal.slug %}">{% trans "Weekly" %}</a> --
-  <a href="{% url "day_calendar" cal.slug %}">{% trans "Daily" %}</a> --
-  <a href="{% url "upcoming_events_feed" cal.id %}">{% trans "Feed" %}</a></li><br>
-{% endfor %}
-</ul>
+
+    
+    {% if user.is_authenticated %}
+        <a class="btn btn-default" href="{% url 'create_calendar' %}">{% trans "Create a Calendar" %}</a>
+<!--         <a class="btn btn-default" href="">{% trans "Your Calendars" %}</a> -->
+    {% endif %}
+
+    {% if request.user.is_staff or request.user.is_superuser %}
+<!--         <a class="btn btn-default" href="">{% trans "All Calendars" %}</a> -->
+
+    {% endif %}
+<br><br>
+<div class="well">
+        {% for cal in object_list %}
+        <b>{{ cal }}</b> :
+          <!-- <a href="{% url "upcoming_events_feed" cal.id %}" class="btn btn-default btn-xs">{% trans "Feed" %}</a> -->
+          <a href="{% url "edit_calendar" cal.slug %}" class="btn btn-danger btn-xs">{% trans "Edit Calendar Name" %}</a> 
+          <a href="{% url "day_calendar" cal.slug %}" class="btn btn-default btn-xs">{% trans "Daily" %}</a> 
+          <a href="{% url "week_calendar" cal.slug %}" class="btn btn-default btn-xs">{% trans "Weekly" %}</a> 
+          <a href="{% url "compact_calendar" cal.slug %}" class="btn btn-default btn-xs">{% trans "Month Overview" %}</a> 
+          <a href="{% url "month_calendar" cal.slug %}" class="btn btn-default btn-xs">{% trans "1 Month" %}</a> 
+          <a href="{% url "tri_month_calendar" cal.slug %}" class="btn btn-default btn-xs">{% trans "3 Months" %}</a> 
+          <a href="{% url "year_calendar" cal.slug %}" class="btn btn-default btn-xs">{% trans "This Year" %}</a> 
+          <br>
+          <br>
+        {% endfor %}
+
+</div>
 {% endblock %}

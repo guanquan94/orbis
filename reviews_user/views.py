@@ -1,16 +1,20 @@
 from urllib import quote_plus
 
+from account.decorators import login_required
+from annoying.decorators import render_to
 from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.core.urlresolvers import reverse
 from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
-# Create your views here.
+
 from .forms import PostForm
 from .models import Post
-from account.decorators import login_required
 
+
+# Create your views here.
 #CRUD
 @login_required
 def post_create(request):
@@ -46,6 +50,7 @@ def post_detail(request, slug=None): #Replace Retrieve with Detail
 		"title": instance.title,
 		"instance": instance,
 		"share_string": share_string,
+		"has_watched": request.user in instance.watchers.all(),
 	}
 	return render(request, "post_detail.html", context)
 
@@ -112,4 +117,29 @@ def post_delete(request, slug=None):
 	instance = get_object_or_404(Post, slug=slug)
 	instance.delete()
 	messages.success(request, "Successfully Deleted")
-	return redirect("posts:list")
+	return redirect("list")
+
+@login_required
+def post_watch(request, slug=None):
+	instance = get_object_or_404(Post, slug=slug)
+	instance.watchers.add(request.user)
+	messages.success(request, "Added")
+	return redirect(reverse('detail', kwargs={"slug": slug}))
+
+@login_required
+def post_unwatch(request, slug=None):
+	instance = get_object_or_404(Post, slug=slug)
+	instance.watchers.remove(request.user)
+	messages.success(request, "Removed")
+	return redirect(reverse('detail', kwargs={"slug": slug}))
+
+@login_required
+@render_to('watchlist_self.html')
+def ViewWatchers(request):
+    return {'post_self': Post.objects.filter(watchers=request.user).order_by("title"),}
+   
+@login_required
+@render_to('watchlist_others.html')
+def ViewOtherWatchers(request, username):
+    return {'post_others': Post.objects.filter(watchers__username=username).order_by("title"),
+		'friendname': username}

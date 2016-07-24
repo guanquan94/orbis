@@ -3,10 +3,11 @@ from django.utils.translation import ugettext_lazy as _
 from schedule.models import Event, Occurrence
 from schedule.widgets import SpectrumColorPicker
 
+from .models import Calendar
 
 class SpanForm(forms.ModelForm):
-    start = forms.SplitDateTimeField(label=_("start"))
-    end = forms.SplitDateTimeField(label=_("end"),
+    start = forms.SplitDateTimeField(label=_("Start: Date (YY-MM-DD) / Time (HH:MM:SS)"))
+    end = forms.SplitDateTimeField(label=_("End: Date (YY-MM-DD) / Time (HH:MM:SS)"),
                                    help_text=_(u"The end time must be later than start time."))
 
     def clean(self):
@@ -42,3 +43,10 @@ class EventAdminForm(forms.ModelForm):
         widgets = {
           'color_event': SpectrumColorPicker,
         }
+        
+
+class CalendarForm(forms.ModelForm):
+    class Meta:
+        model = Calendar
+        fields = ['name']
+

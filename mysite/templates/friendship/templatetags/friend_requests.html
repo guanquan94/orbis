@@ -1,0 +1,17 @@
+{% extends "site_base.html" %}
+{% load i18n %}
+{% load friendshiptags %}
+
+{% block head_title %}Friends{% endblock %}
+
+{% block extra_head %}
+
+<div class="container">
+<ul>
+    {% for friend_request in friend_requests %}
+        <li>{{ friend_request }}</li>
+    {% endfor %}
+</ul>
+</div>
+
+{% endblock%}

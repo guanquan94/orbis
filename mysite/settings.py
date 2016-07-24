@@ -146,8 +146,9 @@ INSTALLED_APPS = [
     "account",
     "pinax.eventlog",
     "pinax.webanalytics",
-    'crispy_forms',
-    'schedule',
+    "schedule",
+    "friendship",
+#     "watchlist",
     #'allauth',
     #'allauth.account',
     #'allauth.socialaccount',
@@ -156,7 +157,6 @@ INSTALLED_APPS = [
 
     # project
     "mysite",
-    "Scheduler",
     'contact_form',
     
 ]

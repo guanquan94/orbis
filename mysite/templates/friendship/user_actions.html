@@ -1,0 +1,41 @@
+{% extends "site_base.html" %}
+{% load i18n %}
+{% load friendshiptags %}
+
+{% block head_title %}Friends{% endblock %}
+
+{% block extra_head %}
+
+
+<div class="container">
+    <br>
+    <h4>Hello {{ user.username }}!</h4>
+    <br>
+    <a class="btn btn-info">Available Users</a>
+    <a class="btn btn-default" href="{% url 'friendship_request_list' %}">Friend Requests List</a>
+    <a class="btn btn-default" href ="{% url 'friendship_view_friends' user.username %}">Friend List</a>
+    <br>
+    <br>
+    
+    <div class="well">
+    <h4>List of Available Users:</h4>
+    <br>
+    <table class="table">
+    <tbody>
+    {% for list_user in users %}
+        <tr>
+        {% if user.username != list_user.username %}
+            <td>{{ list_user.username }}</td>
+            <td class="text-right"><a class="btn btn-success btn-sm" href="{% url 'friendship_add_friend' list_user.username %}">Add as Friend</a></td> 
+        {% endif %}
+        </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+
+    </div>
+</div>
+
+{% endblock %}
+
+ <!-- | <a href="url 'follower_add' list_user.username">Follow User</a> -->

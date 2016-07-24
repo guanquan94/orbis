@@ -1,5 +1,7 @@
 {% load scheduletags %}
+
 <table class="table-condensed table-striped">
+
 {% if day_names %}
 <thead>
   <th>&nbsp;</th>
@@ -8,6 +10,7 @@
   {% endfor %}
 </thead>
 {% endif %}
+
 <tbody>
   {% for week in month.get_weeks %}
       <tr>
@@ -22,4 +25,5 @@
       </tr>
   {% endfor %}
 </tbody>
+
 </table>

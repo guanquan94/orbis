@@ -1,29 +1,34 @@
-import json
-import pytz
 import datetime
-import dateutil.parser
-from django.utils.six.moves.urllib.parse import quote
+import json
 
-from django.db.models import Q, F
+from account.decorators import login_required
+from annoying.decorators import render_to
+import dateutil.parser
 from django.core.urlresolvers import reverse
+from django.db.models import Q, F
 from django.http import HttpResponse
+from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
-from django.http import HttpResponseRedirect, Http404
+from django.utils.http import is_safe_url
+from django.utils.text import slugify
 from django.views.generic.base import TemplateResponseMixin
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import (
         UpdateView, CreateView, DeleteView, ModelFormMixin, ProcessFormView)
-from django.utils.http import is_safe_url
+import pytz
 
+from django.utils.six.moves.urllib.parse import quote
+from reviews_user.models import Post
+from schedule import models
 from schedule.conf.settings import (GET_EVENTS_FUNC, OCCURRENCE_CANCEL_REDIRECT,
-                                    EVENT_NAME_PLACEHOLDER, CHECK_EVENT_PERM_FUNC, 
+                                    EVENT_NAME_PLACEHOLDER, CHECK_EVENT_PERM_FUNC,
                                     CHECK_OCCURRENCE_PERM_FUNC, USE_FULLCALENDAR)
-from schedule.forms import EventForm, OccurrenceForm
+from schedule.forms import EventForm, OccurrenceForm, CalendarForm
 from schedule.models import Calendar, Occurrence, Event
 from schedule.periods import weekday_names
-from schedule.utils import (check_event_permissions, 
-    check_calendar_permissions, coerce_date_dict, 
+from schedule.utils import (check_event_permissions,
+    check_calendar_permissions, coerce_date_dict,
     check_occurrence_permissions)
 
 
@@ -217,7 +222,7 @@ class CreateEventView(EventEditMixin, CreateView):
 
     def get_initial(self):
         date = coerce_date_dict(self.request.GET)
-        initial_data = None
+        initial_data = {}
         if date:
             try:
                 start = datetime.datetime(**date)
@@ -229,6 +234,9 @@ class CreateEventView(EventEditMixin, CreateView):
                 raise Http404
             except ValueError:
                 raise Http404
+        if self.kwargs.get('post_slug'):
+            post = get_object_or_404(Post, slug=self.kwargs['post_slug'])
+            initial_data['title'] = post.title
         return initial_data
 
     def form_valid(self, form):
@@ -397,3 +405,56 @@ def api_select_create(request):
         resp['status'] = "OK"
 
     return HttpResponse(json.dumps(resp))
+
+
+@login_required
+@render_to('schedule/calendar_list.html')
+def ViewCalendars(request):
+    return {'object_list': models.Calendar.objects.filter(creator=request.user),}
+
+
+
+def CreateSlug(instance, new_slug=None):
+    slug = slugify(instance.name)
+    qs = Calendar.objects.filter(slug=slug).order_by("-id")
+    exists = qs.exists()
+    if exists:
+        new_slug = "%s-%s" %(slug, qs.first().id)
+        return CreateSlug(instance, new_slug=new_slug)
+    return slug
+
+
+@login_required
+@render_to('schedule/create_calendar.html')
+def NewCalendar(request, slug=None):
+    instance = None
+    if slug:
+        instance = get_object_or_404(Calendar, slug=slug)
+    else:
+        if Calendar.objects.filter(creator=request.user).exists():
+            return HttpResponse('You cannot create two calendars.')
+
+    if request.method == 'POST':
+        form = CalendarForm(request.POST, instance=instance)
+        if form.is_valid():
+            form.instance.creator = request.user
+            form.instance.slug = CreateSlug(form.instance)
+            form.save()
+            return HttpResponseRedirect(reverse('schedule'))
+    else:
+        form = CalendarForm(instance=instance)
+    return {'form': form}
+
+
+@login_required
+def NewEventFromPost(request, post_slug):
+    calendar = Calendar.objects.filter(creator=request.user)
+    if calendar.exists():
+        pass
+    else:
+        return HttpResponseRedirect(reverse('create_calendar'))
+    return HttpResponseRedirect(reverse(
+        'calendar_create_event_from_post_middle',
+        kwargs={'post_slug': post_slug,
+                'calendar_slug': calendar[0].slug}))
+

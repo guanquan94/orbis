@@ -1,0 +1,29 @@
+{% extends "site_base.html" %}
+{% load i18n %}
+{% load pinax_ratings_tags %}
+
+{% block head_title %}Watched List{% endblock %}
+
+{% block body_base %}
+
+<div class="container">
+    <br>
+    <h4>Hello {{ user.username }}!</h4>
+    <br>
+    <div class="well">
+    <h4><b>Your Watched List:</b></h4>
+    <br>
+    <table class='table'>
+    <tbody>
+    {% for watchers in post_self %}
+        <tr>
+            <td>{{ watchers }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+    </div>
+</div>
+    
+
+{% endblock %}

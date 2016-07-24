@@ -1,22 +1,24 @@
 from __future__ import unicode_literals
-from django.utils.six.moves.builtins import str
-from django.utils.six import with_metaclass
-# -*- coding: utf-8 -*-
 
 from django.contrib.contenttypes import fields
-from django.db import models
-from django.db.models.base import ModelBase
-from django.db.models import Q
 from django.contrib.contenttypes.models import ContentType
 from django.core.urlresolvers import reverse
-from django.utils.translation import ugettext_lazy as _
+from django.db import models
+from django.db.models import Q
+from django.db.models.base import ModelBase
 from django.template.defaultfilters import slugify
-from schedule.utils import EventListManager, get_model_bases
 from django.utils import timezone
 from django.utils.encoding import python_2_unicode_compatible
+from django.utils.six import with_metaclass
+from django.utils.translation import ugettext_lazy as _
 
+from django.utils.six.moves.builtins import str
+from schedule.conf import settings
 from schedule.conf.settings import USE_FULLCALENDAR
+from schedule.utils import EventListManager, get_model_bases
 
+
+# -*- coding: utf-8 -*-
 class CalendarManager(models.Manager):
     """
     >>> user1 = User(username='tony')
@@ -141,6 +143,7 @@ class Calendar(with_metaclass(ModelBase, *get_model_bases())):
     '''
 
     name = models.CharField(_("name"), max_length=200)
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True, verbose_name=_("creator"))
     slug = models.SlugField(_("slug"), max_length=200)
     objects = CalendarManager()
 

@@ -1,0 +1,38 @@
+{% extends "site_base.html" %}
+{% load i18n %}
+{% load friendshiptags %}
+{% load bootstrap %}
+
+{% block head_title %}Friends{% endblock %}
+
+{% block extra_head %}
+
+<div class="container">
+    </br>
+    <div class="well">
+    <b>{{ friendship_request.from_user }}</b> wishes to be friends with you!
+    </br></br>
+    Do you wish to:
+    </br><p>
+    
+    <div class="row">
+        <div class="col-sm-1">
+            <form method="post" action="{% url 'friendship_accept' friendship_request.pk %}">
+            {% csrf_token %}
+            <input type="submit" value="Accept" />
+            </form>
+        </div>
+        
+        <div class="col-sm-1">
+            <form method="post" action="{% url 'friendship_reject' friendship_request.pk %}">
+            {% csrf_token %}
+            <input type="submit" value="Reject" />
+            </form>
+        </div>
+        
+    </div>
+
+    </p>
+    </div>
+</div>
+{% endblock %}

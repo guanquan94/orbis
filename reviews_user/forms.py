@@ -11,5 +11,6 @@ class PostForm(forms.ModelForm):
 			"image",
 			"draft",
 			"publish",
+			"release_date",
 		]
 

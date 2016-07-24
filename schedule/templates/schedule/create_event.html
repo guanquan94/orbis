@@ -1,13 +1,16 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load bootstrap %}
+
+{% block head_title %}Create Event{% endblock %}
 
 {% block body %}
-<b>{% trans "Create or change event. All fields are required." %}</b>
+<b>{% trans "Create your Calendar. All fields are required." %}</b>
 <br><br>
 <form action="" method="post">
   {% csrf_token %}
   <table>
-    {{ form.as_table }}
+    {{ form|bootstrap }}
   </table>
   <br>
   <input type="submit" value="{% trans "Save" %}">

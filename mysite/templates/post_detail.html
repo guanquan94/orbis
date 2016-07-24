@@ -2,11 +2,9 @@
 
 {% load urlify %}
 {% load i18n %}
-{% load crispy_forms_tags %}
 {% load pinax_ratings_tags %}
 
-
-{% block head_title %}pinax-project-account{% endblock %}
+{% block head_title %}Post{% endblock %}
 
 {% block body_class %}home{% endblock %}
 
@@ -26,61 +24,113 @@
 
 {% include "messages_display.html" %}
 
-</br>
+<br>
 <div class='row'>
-<div class='col-sm-4'></div>
-<div class='col-sm-4'>
-	{% if instance.image %}    
-	<img src="{{ instance.image.url }}" class='img-responsive' />
-	{% endif %}
-    <h1>{{ title }} <small>{% if instance.draft %} <span style='color:red; '>Draft</span> {% endif %}{{ instance.publish }}</small></h1>
+<div class='col-sm-8 col-sm-offset-2'>
 
+	{% if instance.image %}    
+	<img src="{{ instance.image.url }}" class='img-responsive center-block'  />
+	{% endif %}
+	
+    <h1>{{ title }} 
+    
+        <div class="pull-right">    
+            <a href="{% url 'calendar_create_event_from_post' instance.slug %}" class="btn btn-default" role="button">Add to Calendar</a>
+            
+            {% if not has_watched %}
+            <a href="{% url 'watchlist_add' instance.slug %}" class="btn btn-default" role="button">Watched</a>
+            {% endif %}
+            
+            {% if has_watched %}
+            <a href="{% url 'watchlist_remove' instance.slug %}" class="btn btn-default" role="button">Remove</a>
+            {% endif %}
+        </div>
+    
+        <small>
+        
+        {% if instance.draft %} 
+        <span style='color:red; '>Draft</span> 
+        {% endif %}
+        
+        <br>
+        {{ instance.publish }} 
+
+        {% if request.user.is_staff or request.user.is_superuser %}
+        <div class="pull-right">
+        <a href="{{ instance.get_edit_url }}" class="btn btn-danger btn-xs" role="button">Edit</a>
+        </div>
+        {% endif %}
+        
+        
+        </small> 
+             
+    </h1>
+    
+
+    <!-- For Full Name Author -->
     {% if instance.user.get_full_name %}
-    <p>Author: {{ instance.user.get_full_name }}</p>
+    <p><b>Author: {{ instance.user.get_full_name }}</b></p>
     {% endif %}
+    
+    {% if instance.user %}
+    <p><b>Author: {{ instance.user }}</b></p>
+    {% endif %}
+    
+    {{ instance.content|linebreaks }}
+    
+    <br>
 
     {% overall_rating instance as the_overall_rating %}
-
-    <div class="overall_rating">Overall Ratings: {{ the_overall_rating }}</div>
-
+    <div class="overall_rating">Overall Ratings: {{ the_overall_rating }} / 5.0</div>
     {% user_rating request.user instance as the_user_rating %}
-
-    <div class="user_rating">{{ request.user.username }}'s Ratings: {{ the_user_rating }}</div>
-
-    </br>
-    
+    <br>
+    <div class="well">
+    <div class="user_rating">Provide Your Ratings: {{ the_user_rating }} / 5.0</div>
+    <!-- request.user.username #your username for jinja -->
     <div id="user_rating"></div>
+    </div>
     
-    </br><p><a href="{{ instance.get_edit_url }}" class="btn btn-danger" role="button">Edit</a></p>
-
-    <p>
-    <div class="fb-like" data-href="{{ request.build_absolute_uri }}" data-layout="standard" data-action="like" data-show-faces="false" data-share="true"></div>
-    </p>
-
-    <p>
+    <br>
+    
+    <div class="fb-like" data-href="{{ request.build_absolute_uri }}" data-layout="standard" data-action="like" data-size="small" data-show-faces="true" data-share="false"></div>
+    <p><h4>Share this on:</h4>
+        <p>
+        
         <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}">
-        Facebook
+        <i class="fa fa-facebook-square fa-3x" style="color:#3b5998"></i>
         </a>
-    
+        
         <a href="https://twitter.com/home?status={{ instance.content|truncatechars:80|urlify }}%20{{ request.build_absolute_uri }}">
-        Twitter
+        <i class="fa fa-twitter-square fa-3x" style="color:#4099FF"></i>
         </a>
-    
-        <a href='https://plus.google.com/share?url={{ request.build_absolute_uri }}'>Google Plus</a>
-    
+        
         <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri }}&title={{ instance.title }}&summary={{ share_string }}&source={{ request.build_absolute_uri }}">
-        LinkedIn
+        <i class="fa fa-linkedin-square fa-3x" style="color:#007bb6"></i>
         </a>
+        
+        <a href="https://plus.google.com/share?url={{ request.build_absolute_uri }}">
+        <i class="fa fa-google-plus-square fa-3x" style="color:#D34836"></i>
+        </a>
+       
+        <!-- <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}">Facebook</a> -->
+        <!-- <a href="https://twitter.com/home?status={{ instance.content|truncatechars:80|urlify }}%20{{ request.build_absolute_uri }}">
+        Twitter
+        </a> -->
+        <!-- <a href='https://plus.google.com/share?url={{ request.build_absolute_uri }}'>Google Plus</a> -->  
+        <!-- <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri }}&title={{ instance.title }}&summary={{ share_string }}&source={{ request.build_absolute_uri }}">
+        LinkedIn
+        </a> -->
+        </p>
     </p>
 </div>
-<div class='col-sm-4'></div>
+
 </div>
 
 <div class='row'>
 <div class='col-sm-4'></div>
 <div class="col-sm-4">
-{{ instance.content|linebreaks }}<br/>
-    <br></br>
+<!-- {{ instance.content|linebreaks }}<br/> -->
+    <br><br>
     <div class="fb-comments" data-href="{{ request.build_absolute_uri }}" data-numposts="5"></div>
 </div>  
 <div class='col-sm-4'></div>

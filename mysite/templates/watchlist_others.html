@@ -1,0 +1,31 @@
+{% extends "site_base.html" %}
+{% load i18n %}
+{% load pinax_ratings_tags %}
+{% load friendshiptags %}
+
+
+{% block head_title %}{{ friendname }}'s Watched List{% endblock %}
+
+{% block body_base %}
+
+
+<div class="container">
+    <br>
+    <h4>Hello {{ user.username }}!</h4>
+    <br>
+    <div class="well">
+    <h4><b>{{ friendname }}'s Watched List:</b></h4>
+    <br>
+    <table class='table'>
+    <tbody>
+    {% for watchers_others in post_others %}
+        <tr>
+            <td>{{ watchers_others }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+
+</div>
+
+{% endblock %}

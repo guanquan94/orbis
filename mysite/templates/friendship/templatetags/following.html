@@ -1,0 +1,21 @@
+{% extends "site_base.html" %}
+{% load i18n %}
+{% load friendshiptags %}
+
+{% block head_title %}Friends{% endblock %}
+
+{% block extra_head %}
+
+<div class="container">
+    <ul>
+        {% for f in following %}
+        {% if f.first_name or f.last_name %}
+        <li>{{ f.first_name }} {{ f.last_name }}</li>
+        {% else %}
+        <li>{{ f.username }}</li>
+        {% endif %}
+        {% endfor %}
+    </ul>
+</div>
+
+{% endblock %}

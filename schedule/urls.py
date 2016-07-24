@@ -9,14 +9,16 @@ from schedule.views import (
         OccurrenceView, EditOccurrenceView, DeleteEventView,
         EditEventView, CreateEventView, OccurrencePreview,
         CreateOccurrenceView, CancelOccurrenceView, FullCalendarView, 
-        api_select_create, api_move_or_resize_by_code, api_occurrences)
+        api_select_create, api_move_or_resize_by_code, api_occurrences,
+    CalendarMixin, ViewCalendars, NewCalendar, NewEventFromPost)
 
 urlpatterns = [
     # urls for Calendars
-    url(r'^calendar/$',
-        ListView.as_view(queryset=Calendar.objects.all(),
-                         template_name='schedule/calendar_list.html'),
-        name="calendar_list"),
+    url(r'^calendar/$', ViewCalendars, name="calendar_list"),
+    
+    url(r'^calendar/create/$', NewCalendar, name="create_calendar"),
+    
+    url(r'^calendar/edit/(?P<slug>[-\w]+)/$', NewCalendar, name="edit_calendar"),
 
     url(r'^calendar/year/(?P<calendar_slug>[-\w]+)/$',
         CalendarByPeriodsView.as_view(),
@@ -52,14 +54,24 @@ urlpatterns = [
         CalendarView.as_view(),
         name="calendar_home",
         ),
+               
     url(r'^fullcalendar/(?P<calendar_slug>[-\w]+)/$',
         FullCalendarView.as_view(), 
-        name='fullcalendar'),
+        name='fullcalendar'
+        ),
+               
+               
 
     # Event Urls
     url(r'^event/create/(?P<calendar_slug>[-\w]+)/$',
         CreateEventView.as_view(),
         name='calendar_create_event'),
+    url(r'^event/create_from_slug/(?P<calendar_slug>[-\w]+)/(?P<post_slug>[-\w]+)/$',
+        CreateEventView.as_view(),
+        name='calendar_create_event_from_post_middle'),
+    url(r'^event/create_from_slug/(?P<post_slug>[-\w]+)/$',
+        NewEventFromPost,
+        name='calendar_create_event_from_post'),
     url(r'^event/edit/(?P<calendar_slug>[-\w]+)/(?P<event_id>\d+)/$',
         EditEventView.as_view(),
         name='edit_event'),
@@ -105,5 +117,5 @@ urlpatterns = [
         api_select_create,
         name='api_select_create'),
 
-    url(r'^$', ListView.as_view(queryset=Calendar.objects.all()), name='schedule'),
+    url(r'^$', ViewCalendars, name="schedule"),
 ]

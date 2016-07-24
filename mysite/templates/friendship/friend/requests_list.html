@@ -1,0 +1,44 @@
+{% extends "site_base.html" %}
+{% load i18n %}
+{% load friendshiptags %}
+
+{% block head_title %}Friend Request List{% endblock %}
+
+{% block extra_head %}
+
+<div class="container">
+    <br>
+    <h4>Hello {{ user.username }}!</h4>
+    <br>
+    <a class="btn btn-default" href="{% url 'friendship_view_users' %}">Available Users</a>
+    <a class="btn btn-info">Friend Requests List</a>
+    <a class="btn btn-default" href ="{% url 'friendship_view_friends' user.username %}">Friend List</a>
+    <br>
+    <br>
+
+        <div class="well col-sm-6">
+        <h3>Friend Request Sent:</h3>  
+        {% for friendship_request in requests %} 
+            {% if user.id == friendship_request.from_user.id %}
+            <br><li><b>{{ friendship_request.from_user }}</b> to <b>{{ friendship_request.to_user }}</b></li>
+            Please wait while they accept your invitation! </br>
+            {% endif %}
+            
+        {% endfor %}
+        </div>
+       
+        <div class="well col-sm-6">
+        <h3>Friend Request Received:</h3>
+        {% for friendship_request in requests %}
+        {% if user.id == friendship_request.to_user.id %}
+        <br><li><b>{{ friendship_request.from_user }}</b> to <b>{{ friendship_request.to_user }}</b> 
+        <a class="btn btn-success btn-xs" href="{% url 'friendship_requests_detail' friendship_request.id %}">View</a></li></br>
+        {% endif %}
+        {% endfor %}
+        </div>
+
+
+</div>
+
+{% endblock %}
+

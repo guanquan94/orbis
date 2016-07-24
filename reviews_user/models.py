@@ -1,14 +1,15 @@
 from __future__ import unicode_literals
 
 from django.conf import settings
+from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.db.models.signals import pre_save
 from django.utils import timezone
-
 from django.utils.text import slugify
-# Create your models here.
 
+
+# Create your models here.
 #Post.objects.all()
 #Post.objects.create(user=user, title="Some Time")
 class PostManager(models.Manager):
@@ -26,10 +27,10 @@ class Post(models.Model):
 	title = models.CharField(max_length=120)
 	slug = models.SlugField(unique=True)
 	image = models.ImageField(upload_to=upload_location, 
-		null=True, 
-		blank=True, 
-		width_field="width_field", 
-		height_field="height_field")
+            null=True, 
+            blank=True, 
+            width_field="width_field", 
+            height_field="height_field")
 	height_field = models.IntegerField(default=0)
 	width_field = models.IntegerField(default=0)
 	content = models.TextField()
@@ -37,7 +38,8 @@ class Post(models.Model):
 	publish = models.DateField(auto_now=False, auto_now_add=False)
 	updated = models.DateTimeField(auto_now=True, auto_now_add=False)
 	timestamp = models.DateTimeField(auto_now=False, auto_now_add=True)
-
+	watchers = models.ManyToManyField(User, related_name='watchers')
+	release_date = models.DateTimeField(blank=True, null=True, default=None, verbose_name="Release Date")
 	objects = PostManager()
 
 	def __unicode__(self):
@@ -73,3 +75,7 @@ def pre_save_post_receiver(sender, instance, *args, **kwargs):
 		instance.slug = create_slug(instance)
 
 pre_save.connect(pre_save_post_receiver, sender=Post)
+
+
+
+

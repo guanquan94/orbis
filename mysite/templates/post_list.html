@@ -1,62 +1,78 @@
 {% extends "site_base.html" %}
 
 {% load i18n %}
-{% load crispy_forms_tags %}
+{% load bootstrap %}
+{% load pinax_ratings_tags %}
 
-{% block head_title %}View{% endblock %}
+{% block head_title %}Review{% endblock %}
 
 {% block body_class %}home{% endblock %}
 
 {% block body_base %}
 
-<div class='col-sm-6 col-sm-offset-2'>
+<div class='container'>
+
     <h1>Reviews</h1>
 
     <form method="GET" action="">
     <input type="text" name="q" placeholder="Search Posts" value="{{ request.GET.q }}"/>
     <input type="submit" value="Search" />
-    </form>
-    <br/>
-    <p>
+    
+    <div class="pull-right">
+    {% if request.user.is_staff or request.user.is_superuser %}
     <a class='btn btn-default' href="{% url 'post_create' %}">Create</a>
-    </p>
-    <br/>
+    {% endif %}
+    </div>
+    </form>
+
+    <br>
     
     {% for obj in object_list %}
-    <div class='row'>
-        <div class="col-sm-6">
+
+    <div class="col-sm-6">
+        
             <div class="thumbnail">
-                {% if obj.image %}
-                <img src="{{ obj.image.url }}" class='img-responsive' />
-                {% endif %}
+            
+            {% if obj.image %}
+            <img src="{{ obj.image.url }}" class='img-responsive' />
+            {% endif %}
+                
             <div class="caption">
+                
                 {% if obj.draft %}
-                <h3>Staff Only: Draft</h3>
+                <h3>
+                <span style="color:red">
+                Staff Only: Draft
+                </span>
+                </h3>
                 {% endif %}
-
+    
                 {% if obj.publish > today %}
-                <h3>Staff Only: Future Post</h3>
+                <h3>
+                <span style="color:red">
+                Staff Only: Future Post
+                </span>
+                </h3>
                 {% endif %}
-
+    
                 <h3><a href='{{ obj.get_absolute_url }}'>{{ obj.title }}</a> <small>{{ obj.publish }}</small></h3>
+                {% overall_rating obj as the_overall_rating %}
+                <div class="overall_rating">Overall Ratings: {{ the_overall_rating }} / 5.0</div>
+                    
                 {% if obj.user.get_full_name %}
                 <p>Author: {{ obj.user.get_full_name }}</p>
+                
                 {% endif %}
                 <p>{{ obj.content|linebreaks|truncatechars:120 }}</p>
-                <p><a href="{{ obj.get_absolute_url }}" class="btn btn-primary" role="button">View</a></p>
-                
+                <p><a href="{{ obj.get_absolute_url }}" class="btn btn-default" role="button">View</a></p>
 
             </div>
         </div>
-    </div>
+</div>
 
 
     {% endfor %}
-
-
-
-
-</div>	
+	
 
 <div class="pagination">
     <span class="step-links">

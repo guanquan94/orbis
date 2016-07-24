@@ -1,4 +1,5 @@
 {% load scheduletags %}
+
 <table class="table table-striped">
     {% for slot in slots %}
     <tr>
@@ -11,7 +12,7 @@
     <td class="col-md-4">
       {% for occ in slot.occurrences %}
                   {% options occ %}
-                              <button type="button"  class="btn {% if occ.cancelled %} btn-danger {%else%} btn-primary {% endif %}" data-toggle="modal" data-target="#{% hash_occurrence occ %}">
+                              <button type="button"  class="btn {% if occ.cancelled %} btn-danger {%else%} btn-info {% endif %}" data-toggle="modal" data-target="#{% hash_occurrence occ %}">
 
                   {% title occ %}
             </button>

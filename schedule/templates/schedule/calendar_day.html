@@ -1,31 +1,52 @@
 {% extends "base.html" %}
 {% load scheduletags i18n %}
+{% block head_title %}Daily Schedule{% endblock %}
 
 {% block body %}
-
 {% include "schedule/_dialogs.html" %}
+
 <div class="row row-centered">
-  <a class="btn btn-primary gradient" href="{% url "week_calendar" calendar.slug %}{% querystring_for_date period.start 3 %}">
-    {% trans "Week" %}
+
+  <a class="btn btn-info">
+    {% trans "Daily" %}
   </a>
-  <a class="btn btn-primary gradient" href="{% url "month_calendar" calendar.slug %}{% querystring_for_date period.start 2 %}">
-    {% trans "Month" %}
+
+  <a class="btn btn-default" href="{% url "week_calendar" calendar.slug %}{% querystring_for_date period.start 3 %}">
+    {% trans "Weekly" %}
+  </a>  
+  
+  <a class="btn btn-default" href="{% url "compact_calendar" calendar.slug %}">
+    {% trans "Month Overview" %}
+  </a> 
+  
+  <a class="btn btn-default" href="{% url "month_calendar" calendar.slug %}{% querystring_for_date period.start 2 %}">
+    {% trans "1 Month" %}
   </a>
-  <a class="btn btn-primary gradient" href="{% url "year_calendar" calendar.slug %}{% querystring_for_date period.start 1 %}">
-    {% trans "Year" %}
+  
+  <a class="btn btn-default" href="{% url "tri_month_calendar" calendar.slug %}">
+    {% trans "3 Months" %}
+  </a> 
+
+  <a class="btn btn-default" href="{% url "year_calendar" calendar.slug %}{% querystring_for_date period.start 1 %}">
+    {% trans "This Year" %}
   </a>
+  
 </div>
+
 <div class="row row-centered">
     <h1>{{ calendar.name }}</h1>
     {% prevnext "day_calendar" calendar period "l, F d, Y" %}
     <div class="now">
-      <a class="btn btn-primary gradient" href="{% url "day_calendar" calendar.slug %}">
+    <br>
+      <a class="btn btn-default" href="{% url "day_calendar" calendar.slug %}">
         {% trans "Today" %}
       </a>
     </div>
 </div>
-  <div class="row row-centered">
+
+<div class="row row-centered">
     <div>
+        <br>
       {% daily_table period %}
     </div>
 </div>

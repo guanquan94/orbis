@@ -1,0 +1,28 @@
+{% extends "site_base.html" %}
+{% load i18n %}
+
+{% block extra_head %}
+
+
+{% if not to_username == request.user.username %}
+
+    {% if errors %}
+    <p>{{ errors|join:", " }}</p>
+    {% endif %}
+    
+    <div class="container">
+        </br>
+        <div class="well">
+            <h4>Do you really wish to add: <b>{{ to_username }}</b> ?</h4>
+            </br>
+            <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="to_username" value="{{ to_username }}" />
+            <input type="submit" value="Continue Sending [ {{ to_username }} ] a Friend Request?" />
+            </form>
+        </div>
+    </div>
+    
+{% endif %}
+
+{% endblock %}

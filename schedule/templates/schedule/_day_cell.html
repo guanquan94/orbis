@@ -1,9 +1,11 @@
 {% load scheduletags %}
+
+
 {% ifnotequal day.start.month month.start.month %}
   <td class="muted"></td>
 {% else %}
   {% if day.has_occurrences %}
-    <td class="btn-primary gradient">
+    <td class="btn-info">
   {% else %}
     <td>
   {% endif %}
@@ -11,7 +13,9 @@
     <strong>{{day.start.day}}</strong>
   </a>
   {% ifnotequal size "small" %}
+  </td><td>
     {% include "schedule/_day_cell_big.html" %}
+    </td>
   {% endifnotequal %}
 </td>
 {% endifnotequal %}

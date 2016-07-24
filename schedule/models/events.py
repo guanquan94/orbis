@@ -55,15 +55,15 @@ class Event(with_metaclass(ModelBase, *get_model_bases())):
     '''
     start = models.DateTimeField(_("start"))
     end = models.DateTimeField(_("end"), help_text=_("The end time must be later than the start time."))
-    title = models.CharField(_("title"), max_length=255)
-    description = models.TextField(_("description"), null=True, blank=True)
+    title = models.CharField(_("title:"), max_length=255)
+    description = models.TextField(_("description:"), null=True, blank=True)
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True, verbose_name=_("creator"),
                                 related_name='creator')
     created_on = models.DateTimeField(_("created on"), auto_now_add=True)
     updated_on = models.DateTimeField(_("updated on"), auto_now=True)
-    rule = models.ForeignKey(Rule, null=True, blank=True, verbose_name=_("rule"),
+    rule = models.ForeignKey(Rule, null=True, blank=True, verbose_name=_("rule:"),
                              help_text=_("Select '----' for a one time only event."))
-    end_recurring_period = models.DateTimeField(_("end recurring period"), null=True, blank=True,
+    end_recurring_period = models.DateTimeField(_("End Recurring Period:"), null=True, blank=True,
                                                 help_text=_("This date is ignored for one time only events."))
     calendar = models.ForeignKey(Calendar, null=True, blank=True, verbose_name=_("calendar"))
     color_event = models.CharField(_("Color event"), null=True, blank=True, max_length=10)

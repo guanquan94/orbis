@@ -1,12 +1,63 @@
 {% extends "site_base.html" %}
+{% block head_title %}About{% endblock %}
+
 
 {% block extra_head %}
 
-<div class='row'>
-<div class='col-sm-6 col-sm-offset-2'>
+<div class='container'>
 <h1>About Us</h1>
-<p> This site is created by Zhi Yi and Guan Quan. The main usage of this website would be to view when the next episode of your favourite movie is about to come out! </p>
+<div class="well">
+        <p><h4> This site is created by Zhi Yi and Guan Quan. The main usage of this website would be to view when the next episode of your favourite movie is about to come out! </h4></p>
+        <p><h4> To utilize this site, follow the details below: </h4><p>
 </div>
+      
+<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+  <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingOne">
+      <h4 class="panel-title">
+        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          Reviews
+        </a>
+      </h4>
+    </div>
+    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+      <div class="panel-body">
+        How to use Reviews System
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingTwo">
+      <h4 class="panel-title">
+        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+          Scheduler
+        </a>
+      </h4>
+    </div>
+    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+      <div class="panel-body">
+        How to use Scheduler?
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingThree">
+      <h4 class="panel-title">
+        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+          Friend System
+        </a>
+      </h4>
+    </div>
+    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+      <div class="panel-body">
+        How to use Friend System?
+      </div>
+    </div>
+  </div>
+</div>
+      
+
+    </div>
 </div>
 
 {% endblock %}

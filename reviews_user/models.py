@@ -38,7 +38,7 @@ class Post(models.Model):
 	publish = models.DateField(auto_now=False, auto_now_add=False)
 	updated = models.DateTimeField(auto_now=True, auto_now_add=False)
 	timestamp = models.DateTimeField(auto_now=False, auto_now_add=True)
-	watchers = models.ManyToManyField(User, related_name='watchers')
+	watchers = models.ManyToManyField(User, blank=True, related_name='watchers')
 	release_date = models.DateTimeField(blank=True, null=True, default=None, verbose_name="Release Date")
 	objects = PostManager()
 

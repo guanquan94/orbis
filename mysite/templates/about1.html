@@ -1,4 +1,5 @@
 {% extends "site_base.html" %}
+{% load staticfiles %}
 {% block head_title %}About{% endblock %}
 
 
@@ -22,7 +23,45 @@
     </div>
     <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
       <div class="panel-body">
-        How to use Reviews System
+        
+        <div class="well">
+        <p><b>Step 1:</b></p>
+        <p><b>1. Click on the Reviews that interests you.</b></p>
+        <img src="{% static "img/R1.jpg" %}"/>
+        </div>
+        
+        <div class="well">
+        <p><b>Step 2:</b></p>
+        <p><b>2. If you have watched the TV show before, you can add it to your "Watched List"</b></p>
+        <img src="{% static "img/R2.jpg" %}"/>
+        </div>
+        
+        <div class="well">
+        <p><b>Step 3:</b></p>
+        <p><b>Under [1], you can input your own ratings.</b></p>
+        <p><b>Under [2], you can add this TV show to your calendar.</b></p>
+        <p><b>Under [3], you can share it on your social media platforms with your friends.</b></p>
+        <img src="{% static "img/R3.jpg" %}"/>
+        </div>
+        
+        <div class="well">
+        <p><b>Step 4:</b></p>
+        <p><b>Under [1], you can input your Start Date and Time in the format required.</b></p>
+        <p><b>Under [2], you can input your End Date and Time in the format required. Tip: End Date should be the same day.</b></p>
+        <p><b>Under [3], the title of the TV show will be automatically added according to the title.</b></p>
+        <p><b>Under [4], you can input your own description.</b></p>
+        <p><b>Under [5], you can ignore the remaining field and click save.</b></p>
+        <img src="{% static "img/R4.jpg" %}"/>
+        </div>
+        
+        <div class="well">
+        <p><b>Step 5:</b></p>
+        <p><b>You can continue to make further edits or click on Scheduler to continue on!</b></p>
+        <p><b>However, you will be required to create a calendar first. Please continue on through the Scheduler.</b></p>
+        <img src="{% static "img/R5.jpg" %}"/>
+        </div>
+        
+        
       </div>
     </div>
   </div>
@@ -36,7 +75,27 @@
     </div>
     <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
       <div class="panel-body">
-        How to use Scheduler?
+
+        <div class="well">
+        <p><b>Step 1:</b></p>
+        <p><b>You will be prompted to create a Calendar. Hence click on the "Create Calendar" button and input your desired name!</b></p>
+        <p><b>However, you will be required to create a calendar first. Please continue on through the Scheduler.</b></p>
+        <img src="{% static "img/S1.jpg" %}"/>
+        </div>
+
+        <div class="well">
+        <p><b>Step 2:</b></p>
+        <p><b>After completing Step 1, your Calendar will be ready!</b></p>
+        <p><b>Note: You can only create ONE Calendar. Trying to create more than ONE will result in a message popout stating "You cannot create two calendars."</b></p>
+        <img src="{% static "img/S2.jpg" %}"/>
+        </div>
+
+        <div class="well">
+        <p><b>Step 3:</b></p>
+        <p><b>After that, your TV show will be reflected on your Calendar.</b></p>
+        <img src="{% static "img/S3.jpg" %}"/>
+        </div>
+
       </div>
     </div>
   </div>
@@ -44,13 +103,50 @@
     <div class="panel-heading" role="tab" id="headingThree">
       <h4 class="panel-title">
         <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-          Friend System
+          Friend and Watch List
         </a>
       </h4>
     </div>
     <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
       <div class="panel-body">
-        How to use Friend System?
+      
+        <div class="well">
+        <p><b>Step 1:</b></p>
+        <p><b>You can locate your Watch List under your Profile on the Navigation Bar.</b></p>
+        <img src="{% static "img/W1.jpg" %}"/>
+        </div>
+
+        <div class="well">
+        <p><b>Step 2:</b></p>
+        <p><b>Under the same tab, you can select Friend List and you will be redirected to this page.</b></p>
+        <p><b>Here, you can find your friend's username and add them to your Friend List.</b></p>        
+        <img src="{% static "img/F1.jpg" %}"/> 
+        </div>  
+
+        <div class="well">
+        <p><b>Step 3:</b></p>
+        <p><b>Under the Friend Request List, you can see the Friend Request that you have sent out and received!</b></p>
+        <p><b>You can also view your received Friend Request and add them to your Friend List!</b></p>        
+        <img src="{% static "img/F2.jpg" %}"/>
+        </div>
+ 
+        <div class="well">
+        <p><b>Step 4:</b></p>
+        <p><b>Under the Friend List, you can see your list of friends that have accepted your Friend Request.</b></p>
+        <p><b>You can then proceed to view what TV shows have they watched through "View Watched List".</b></p>        
+        <img src="{% static "img/F3.jpg" %}"/> 
+        </div>
+        
+        <div class="well">
+        <p><b>Step 5:</b></p>
+        <p><b>Here, you can see their watched list for the TV shows.</b></p>
+        <p><b>You can prevent yourself from accidentally providing spoilers!</b></p>        
+        <img src="{% static "img/W2.jpg" %}"/> 
+        </div>
+        
+        <div class="well">
+        <p><b>The End. Brought to you by Project Orbis!</b></p>                  
+        </div>
       </div>
     </div>
   </div>

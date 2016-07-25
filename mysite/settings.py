@@ -148,12 +148,6 @@ INSTALLED_APPS = [
     "pinax.webanalytics",
     "schedule",
     "friendship",
-#     "watchlist",
-    #'allauth',
-    #'allauth.account',
-    #'allauth.socialaccount',
-    #'allauth.socialaccount.providers.facebook',
-    #'allauth.socialaccount.providers.twitter',
 
     # project
     "mysite",

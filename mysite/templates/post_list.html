@@ -57,14 +57,19 @@
     
                 <h3><a href='{{ obj.get_absolute_url }}'>{{ obj.title }}</a> <small>{{ obj.publish }}</small></h3>
                 {% overall_rating obj as the_overall_rating %}
-                <div class="overall_rating">Overall Ratings: {{ the_overall_rating }} / 5.0</div>
                     
+                <div class="overall_rating"><i class="fa fa-star-half-o"></i> Overall Ratings: {{ the_overall_rating }} / 5.0
+                    <div class="pull-right">
+                    <i class="fa fa-calendar"></i> Release Date: {{ obj.release_date }}
+                    </div>
+                </div>   
                 {% if obj.user.get_full_name %}
                 <p>Author: {{ obj.user.get_full_name }}</p>
                 
                 {% endif %}
+                <br>
                 <p>{{ obj.content|linebreaks|truncatechars:120 }}</p>
-                <p><a href="{{ obj.get_absolute_url }}" class="btn btn-default" role="button">View</a></p>
+                <a href="{{ obj.get_absolute_url }}" class="btn btn-default" role="button">View</a>
 
             </div>
         </div>

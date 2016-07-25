@@ -26,7 +26,7 @@
 
 <br>
 <div class='row'>
-<div class='col-sm-8 col-sm-offset-2'>
+<div class='col-sm-6 col-sm-offset-3'>
 
 	{% if instance.image %}    
 	<img src="{{ instance.image.url }}" class='img-responsive center-block'  />
@@ -35,14 +35,13 @@
     <h1>{{ title }} 
     
         <div class="pull-right">    
-            <a href="{% url 'calendar_create_event_from_post' instance.slug %}" class="btn btn-default" role="button">Add to Calendar</a>
             
             {% if not has_watched %}
             <a href="{% url 'watchlist_add' instance.slug %}" class="btn btn-default" role="button">Watched</a>
             {% endif %}
             
             {% if has_watched %}
-            <a href="{% url 'watchlist_remove' instance.slug %}" class="btn btn-default" role="button">Remove</a>
+            <a href="{% url 'watchlist_remove' instance.slug %}" class="btn btn-default" role="button">Remove from Watch List</a>
             {% endif %}
         </div>
     
@@ -90,6 +89,11 @@
     <div id="user_rating"></div>
     </div>
     
+    <div class="well">
+    Official Release: {{ instance.release_date }}
+    <a href="{% url 'calendar_create_event_from_post' instance.slug %}" class="btn btn-success btn btn-xs pull-right" role="button">Add to Calendar</a>
+    </div>
+    
     <br>
     
     <div class="fb-like" data-href="{{ request.build_absolute_uri }}" data-layout="standard" data-action="like" data-size="small" data-show-faces="true" data-share="false"></div>
@@ -127,13 +131,10 @@
 </div>
 
 <div class='row'>
-<div class='col-sm-4'></div>
-<div class="col-sm-4">
+<div class="col-sm-4 col-sm-offset-3">
 <!-- {{ instance.content|linebreaks }}<br/> -->
-    <br><br>
     <div class="fb-comments" data-href="{{ request.build_absolute_uri }}" data-numposts="5"></div>
 </div>  
-<div class='col-sm-4'></div>
 </div>
 
 

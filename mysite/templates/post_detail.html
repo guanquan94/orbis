@@ -43,6 +43,10 @@
             {% if has_watched %}
             <a href="{% url 'watchlist_remove' instance.slug %}" class="btn btn-default" role="button">Remove from Watch List</a>
             {% endif %}
+            
+            {% if request.user.is_staff or request.user.is_superuser %}
+            <a href="{{ instance.get_edit_url }}" class="btn btn-danger" role="button">Edit</a>
+            {% endif %}
         </div>
     
         <small>
@@ -54,11 +58,7 @@
         <br>
         {{ instance.publish }} 
 
-        {% if request.user.is_staff or request.user.is_superuser %}
-        <div class="pull-right">
-        <a href="{{ instance.get_edit_url }}" class="btn btn-danger btn-xs" role="button">Edit</a>
-        </div>
-        {% endif %}
+
         
         
         </small> 

@@ -14,7 +14,7 @@ DATABASES = {
     }
 }
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['orbitalorbis.herokuapp.com']
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'yourgmail@gmail.com'
@@ -73,9 +73,12 @@ STATIC_ROOT = os.path.join(PACKAGE_ROOT, "site_media", "static")
 STATIC_URL = "/site_media/static/"
 
 # Additional locations of static files
-STATICFILES_DIRS = [
-    os.path.join(PROJECT_ROOT, "static", "dist"),
-]
+# STATICFILES_DIRS = [
+#     os.path.join(PROJECT_ROOT, "static", "dist"),
+# ]
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+
+
 
 # List of finder classes that know how to find static files in
 # various locations.
